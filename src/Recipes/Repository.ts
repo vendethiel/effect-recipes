@@ -12,7 +12,7 @@ export class RecipeRepository extends Effect.Service<RecipeRepository>()(
       return {
         list: Effect.fn("RecipeRepository.list")(function* () {
           const rows = yield* db`SELECT id, title FROM recipe`;
-          return yield* Effect.all(rows.map(deserializeUnknownRecipe));
+          return yield* Effect.forEach(rows, deserializeUnknownRecipe);
         }),
         get: Effect.fn("RecipeRepository.get")(function* (id: RecipeId) {
           const [row] =
