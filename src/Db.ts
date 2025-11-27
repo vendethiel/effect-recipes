@@ -1,5 +1,7 @@
+import * as PgKysely from "@effect/sql-kysely/Pg";
 import { PgClient } from "@effect/sql-pg";
-import { Config, Effect, Redacted } from "effect";
+import { Config, Context, Effect, Layer, Redacted } from "effect";
+import type { RecipeTable } from "./Recipes/Table";
 
 export class DbConfig extends Effect.Service<DbConfig>()("DbConfig", {
   effect: Effect.gen(function* () {
@@ -23,11 +25,22 @@ export class DbConfig extends Effect.Service<DbConfig>()("DbConfig", {
 }) {}
 
 export class DbClient extends Effect.Service<DbClient>()("DbClient", {
-  dependencies: [DbConfig.Default], // TODO config
+  dependencies: [DbConfig.Default],
   scoped: Effect.gen(function* () {
     const config = yield* DbConfig;
     return yield* PgClient.make(config);
   }),
-}) {
-  // static Test = this.Default
+}) {}
+
+interface Database {
+  recipe: RecipeTable;
 }
+
+export class Db extends Context.Tag("Db")<
+  Db,
+  PgKysely.EffectKysely<Database>
+>() {}
+
+export const PgDbLive = Layer.effect(Db, PgKysely.make<Database>()).pipe(
+  Layer.provide(DbClient.Default),
+);

@@ -20,12 +20,18 @@ importers:
       '@effect/sql':
         specifier: ^0.48.0
         version: 0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6)
+      '@effect/sql-kysely':
+        specifier: ^0.44.0
+        version: 0.44.0(@effect/sql@0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(effect@3.19.6)(kysely@0.27.6)
       '@effect/sql-pg':
         specifier: ^0.49.6
         version: 0.49.6(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(@effect/sql@0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(effect@3.19.6)
       effect:
         specifier: ^3.17.7
         version: 3.19.6
+      kysely:
+        specifier: ^0.27.3
+        version: 0.27.6
     devDependencies:
       '@babel/cli':
         specifier: ^7.24.8
@@ -273,6 +279,13 @@ packages:
     peerDependencies:
       '@effect/platform': ^0.93.3
       effect: ^3.19.5
+
+  '@effect/sql-kysely@0.44.0':
+    resolution: {integrity: sha512-xjXHMo92P7PBqz37oyI778nJIhmuqIBUvywWZ5NmZvKgVSJia5ziBG6/5YOFI9tLCisg17G1waYI09z+NyYxwQ==}
+    peerDependencies:
+      '@effect/sql': ^0.48.0
+      effect: ^3.19.0
+      kysely: ^0.28.2
 
   '@effect/sql-pg@0.49.6':
     resolution: {integrity: sha512-T+o4qpORF2QB9yeKqV7eCrkjnqfWLMlWpFA0halcpHhSKc5NdJ4HNLfVKKHj0C8LTcXysmVulUcNNISEj7QdoA==}
@@ -2103,6 +2116,10 @@ packages:
   kubernetes-types@1.30.0:
     resolution: {integrity: sha512-Dew1okvhM/SQcIa2rcgujNndZwU8VnSapDgdxlYoB84ZlpAD43U6KLAFqYo17ykSFGHNPrg0qry0bP+GJd9v7Q==}
 
+  kysely@0.27.6:
+    resolution: {integrity: sha512-FIyV/64EkKhJmjgC0g2hygpBv5RNWVPyNCqSAD7eTCv6eFWNIi4PN1UvdSJGicN/o35bnevgis4Y0UDC0qi8jQ==}
+    engines: {node: '>=14.0.0'}
+
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -3116,6 +3133,12 @@ snapshots:
       '@effect/platform': 0.93.4(effect@3.19.6)
       effect: 3.19.6
       msgpackr: 1.11.5
+
+  '@effect/sql-kysely@0.44.0(@effect/sql@0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(effect@3.19.6)(kysely@0.27.6)':
+    dependencies:
+      '@effect/sql': 0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6)
+      effect: 3.19.6
+      kysely: 0.27.6
 
   '@effect/sql-pg@0.49.6(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(@effect/sql@0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(effect@3.19.6)':
     dependencies:
@@ -4918,6 +4941,8 @@ snapshots:
       json-buffer: 3.0.1
 
   kubernetes-types@1.30.0: {}
+
+  kysely@0.27.6: {}
 
   levn@0.4.1:
     dependencies:

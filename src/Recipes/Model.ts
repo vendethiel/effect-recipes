@@ -5,17 +5,18 @@ import { Schema } from "effect/index";
 export const RecipeId = Schema.Number.pipe(Schema.brand("RecipeId"));
 export type RecipeId = typeof RecipeId.Type;
 export const RecipeIdFromString = Schema.NumberFromString.pipe(
-  Schema.compose(RecipeId)
+  Schema.compose(RecipeId),
 );
 
 export class Recipe extends Model.Class<Recipe>("Recipe")({
   id: Model.Generated(RecipeId),
-  title: Schema.String
-})
-{}
+  title: Schema.String,
+}) {}
 
-export class RecipeNotFound extends Schema.TaggedClass<RecipeNotFound>("RecipeNotFound")(
+export class RecipeNotFound extends Schema.TaggedClass<RecipeNotFound>(
+  "RecipeNotFound",
+)(
   "RecipeNotFound",
   { id: RecipeId },
-  HttpApiSchema.annotations({ status: 404 }))
-{}
+  HttpApiSchema.annotations({ status: 404 }),
+) {}
