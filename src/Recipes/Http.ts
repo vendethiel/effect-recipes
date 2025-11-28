@@ -1,19 +1,30 @@
 import { HttpApiBuilder } from "@effect/platform";
-import { Effect } from "effect";
+import { Effect, Layer } from "effect";
 import { Api } from "src/Api";
 import { RecipeNotFound } from "src/Recipes/Model";
+import { RecipeRepository } from "./Repository";
 
 export const HttpRecipesLive = HttpApiBuilder.group(
   Api,
   "recipes",
   (handlers) =>
-    // eslint-disable-next-line require-yield
     Effect.gen(function* () {
+      const repo = yield* RecipeRepository;
       return handlers
-        .handle("list", () => Effect.succeed([]))
+        .handle(
+          "list",
+          () => repo.list().pipe(Effect.orDie))
         .handle(
           "get",
-          ({ path }) => Effect.fail(new RecipeNotFound({ id: path.id })), // TODO
+          ({ path: { id } }) => repo.get(id).pipe(
+            Effect.catchTag(
+              "NoSuchElementException",
+              () => Effect.fail(RecipeNotFound.make({ id }))
+            ),
+            Effect.orDie,
+          ),
         );
     }),
-);
+).pipe(Layer.provide([
+  RecipeRepository.Default
+]));
