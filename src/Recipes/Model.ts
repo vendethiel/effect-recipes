@@ -13,7 +13,7 @@ export class Recipe extends Model.Class<Recipe>("Recipe")({
   title: Schema.String,
 }) {}
 
-export class RecipeNotFound extends Schema.TaggedClass<RecipeNotFound>(
+export class RecipeNotFound extends Schema.TaggedError<RecipeNotFound>(
   "RecipeNotFound",
 )(
   "RecipeNotFound",

@@ -19,7 +19,7 @@ export const HttpRecipesLive = HttpApiBuilder.group(
           ({ path: { id } }) => repo.get(id).pipe(
             Effect.catchTag(
               "NoSuchElementException",
-              () => Effect.fail(RecipeNotFound.make({ id }))
+              () => RecipeNotFound.make({ id })
             ),
             Effect.orDie,
           ),
