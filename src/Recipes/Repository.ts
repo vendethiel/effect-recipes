@@ -20,7 +20,7 @@ export class RecipeRepository extends Effect.Service<RecipeRepository>()(
             .where("recipe.id", "=", id)
             .limit(1)
             .selectAll();
-          return Option.fromNullable(row).pipe(Effect.map(deserializeRecipe));
+          return yield* Option.fromNullable(row).pipe(Effect.map(deserializeRecipe));
         }),
       };
     }),
