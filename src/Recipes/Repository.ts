@@ -1,6 +1,6 @@
-import { Effect, Option } from "effect";
+import { Effect, HashMap, Layer, Option, Ref } from "effect";
 import { Db, PgDbLive } from "src/Db";
-import { type RecipeId } from "src/Recipes/Model";
+import { Recipe, type RecipeId } from "src/Recipes/Model";
 import { deserializeRecipe } from "./Table";
 
 export class RecipeRepository extends Effect.Service<RecipeRepository>()(
@@ -28,5 +28,19 @@ export class RecipeRepository extends Effect.Service<RecipeRepository>()(
     }),
   },
 ) {
-  //   static Test = this.DefaultWithoutDependencies.pipe(Layer.provide());
+  static readonly InMemory = Layer.effect(
+    this,
+    Effect.gen(function* (){
+      const ref = yield* Ref.make(HashMap.empty<RecipeId, Recipe>());
+
+      return RecipeRepository.make({
+        list: Effect.fn("RecipeRepository.list")(function* (){
+          return HashMap.toValues(yield* Ref.get(ref));
+        }),
+        get: Effect.fn("RecipeRepository.get")(function* (id: RecipeId) {
+          return yield* HashMap.get(yield* Ref.get(ref), id);
+        }),
+      })
+    })
+  )
 }
