@@ -2,7 +2,7 @@ import type { Generated, Insertable, Selectable, Updateable } from "kysely";
 import { type Recipe, RecipeId } from "./Model";
 
 export interface RecipeTable {
-  id: Generated<number>;
+  id: Generated<bigint>;
   title: string;
 }
 

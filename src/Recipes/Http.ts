@@ -1,7 +1,7 @@
 import { HttpApiBuilder } from "@effect/platform";
 import { Effect, Layer } from "effect";
 import { Api } from "src/Api";
-import { RecipeNotFound } from "src/Recipes/Model";
+import { RecipeNotFound, RecipeCreationError } from "src/Recipes/Model";
 import { RecipeRepository } from "./Repository";
 
 export const HttpRecipesLive = HttpApiBuilder.group(
@@ -9,20 +9,31 @@ export const HttpRecipesLive = HttpApiBuilder.group(
   "recipes",
   (handlers) =>
     Effect.gen(function* () {
-      const repo = yield* RecipeRepository;
       return handlers
         .handle(
           "list",
-          () => repo.list().pipe(Effect.orDie))
+          () => RecipeRepository.list().pipe(Effect.orDie))
         .handle(
           "get",
-          ({ path: { id } }) => repo.get(id).pipe(
+          ({ path: { id } }) => RecipeRepository.get(id).pipe(
             Effect.catchTag(
               "NoSuchElementException",
               () => RecipeNotFound.make({ id })
             ),
             Effect.orDie,
           ),
+        )
+        .handle(
+          "create",
+          ({ payload }) =>
+            // TODO auth
+            RecipeRepository.create(payload).pipe(
+              Effect.catchTag(
+                "NoSuchElementException",
+                () => RecipeCreationError.make()
+              ),
+              Effect.orDie
+            )
         );
     }),
 ).pipe(Layer.provide([
