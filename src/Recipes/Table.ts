@@ -1,18 +1,10 @@
-import type { Generated, Insertable, Selectable, Updateable } from "kysely";
-import { type Recipe, RecipeId } from "./Model";
+import { Schema } from "effect";
+import { Generated, Table } from "effect-sql-kysely";
 
-export interface RecipeTable {
-  id: Generated<bigint>;
-  title: string;
-}
+export const RecipeId = Schema.BigInt.pipe(Schema.brand("RecipeId"));
+export type RecipeId = typeof RecipeId.Type;
 
-export type RecipeRow = Selectable<RecipeTable>;
-export type RecipeNew = Insertable<RecipeTable>;
-export type RecipeUpdate = Updateable<RecipeTable>;
-
-export function deserializeRecipe(row: RecipeRow): Recipe {
-  return {
-    id: RecipeId.make(row.id),
-    title: row.title,
-  };
-}
+export const Recipes = Table({
+  id: Generated(RecipeId),
+  title: Schema.String,
+});

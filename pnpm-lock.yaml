@@ -20,18 +20,21 @@ importers:
       '@effect/sql':
         specifier: ^0.48.0
         version: 0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6)
-      '@effect/sql-kysely':
-        specifier: ^0.44.0
-        version: 0.44.0(@effect/sql@0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(effect@3.19.6)(kysely@0.27.6)
       '@effect/sql-pg':
         specifier: ^0.49.6
         version: 0.49.6(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(@effect/sql@0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(effect@3.19.6)
       effect:
         specifier: ^3.17.7
         version: 3.19.6
+      effect-sql-kysely:
+        specifier: 0.4.0
+        version: 0.4.0(@effect/sql@0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(effect@3.19.6)(kysely@0.28.3)
       kysely:
-        specifier: ^0.27.3
-        version: 0.27.6
+        specifier: ^0.28.3
+        version: 0.28.3
+      pg:
+        specifier: ^8.16.3
+        version: 8.16.3
     devDependencies:
       '@babel/cli':
         specifier: ^7.24.8
@@ -69,6 +72,9 @@ importers:
       '@types/node':
         specifier: ^22.5.2
         version: 22.19.1
+      '@types/pg':
+        specifier: ^8.15.6
+        version: 8.15.6
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.4.0
         version: 8.48.0(@typescript-eslint/parser@8.48.0(eslint@9.39.1)(typescript@5.9.3))(eslint@9.39.1)(typescript@5.9.3)
@@ -234,6 +240,19 @@ packages:
   '@effect/eslint-plugin@0.3.2':
     resolution: {integrity: sha512-c4Vs9t3r54A4Zpl+wo8+PGzZz3JWYsip41H+UrebRLjQ2Hk/ap63IeCgN/HWcYtxtyhRopjp7gW9nOQ2Snbl+g==}
 
+  '@effect/experimental@0.57.10':
+    resolution: {integrity: sha512-Susfz1Fvmb6EgwZLtB0clHyhVIiHsGxQnrys/7y66aGQwv5nvf61VVR+WV5oKriSxYQtPKKQWl8tZTptLm8GWQ==}
+    peerDependencies:
+      '@effect/platform': ^0.93.6
+      effect: ^3.19.8
+      ioredis: ^5
+      lmdb: ^3
+    peerDependenciesMeta:
+      ioredis:
+        optional: true
+      lmdb:
+        optional: true
+
   '@effect/experimental@0.57.4':
     resolution: {integrity: sha512-1qbOGSugeDoCoXGdIsTBk53pKwk4aImmPIghhya1MBUSSExHi9YRn6u0PNQecungNyeKDz6A8k1+rZIbsMQy4g==}
     peerDependencies:
@@ -274,18 +293,16 @@ packages:
     peerDependencies:
       effect: ^3.19.6
 
+  '@effect/platform@0.93.6':
+    resolution: {integrity: sha512-I5lBGQWzWXP4zlIdPs7z7WHmEFVBQhn+74emr/h16GZX96EEJ6I1rjGaKyZF7mtukbMuo9wEckDPssM8vskZ/w==}
+    peerDependencies:
+      effect: ^3.19.8
+
   '@effect/rpc@0.72.2':
     resolution: {integrity: sha512-BmTXybXCOq96D2r9mvSW/YdiTQs5CStnd4II+lfVKrMr3pMNERKLZ2LG37Tfm4Sy3Q8ire6IVVKO/CN+VR0uQQ==}
     peerDependencies:
       '@effect/platform': ^0.93.3
       effect: ^3.19.5
-
-  '@effect/sql-kysely@0.44.0':
-    resolution: {integrity: sha512-xjXHMo92P7PBqz37oyI778nJIhmuqIBUvywWZ5NmZvKgVSJia5ziBG6/5YOFI9tLCisg17G1waYI09z+NyYxwQ==}
-    peerDependencies:
-      '@effect/sql': ^0.48.0
-      effect: ^3.19.0
-      kysely: ^0.28.2
 
   '@effect/sql-pg@0.49.6':
     resolution: {integrity: sha512-T+o4qpORF2QB9yeKqV7eCrkjnqfWLMlWpFA0halcpHhSKc5NdJ4HNLfVKKHj0C8LTcXysmVulUcNNISEj7QdoA==}
@@ -1044,6 +1061,9 @@ packages:
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
 
+  '@types/pg@8.15.6':
+    resolution: {integrity: sha512-NoaMtzhxOrubeL/7UZuNTrejB4MPAJ0RpxZqXQf2qXuVlTPuG6Y8p4u9dKRaue4yjmC7ZhzVO2/Yyyn25znrPQ==}
+
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
 
@@ -1498,6 +1518,13 @@ packages:
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
+
+  effect-sql-kysely@0.4.0:
+    resolution: {integrity: sha512-Rtli3szRuu4PD13S0jtIJ5Pyxw2NkCUkit3H9zneGM4uvQMgRDpDyb8x3ctydj/efF6WaP0EVwUtRQFaN7+sdQ==}
+    peerDependencies:
+      '@effect/sql': ^0.44.0
+      effect: ^3.17.1
+      kysely: ^0.28.3
 
   effect@3.19.6:
     resolution: {integrity: sha512-Eh1E/CI+xCAcMSDC5DtyE29yWJINC0zwBbwHappQPorjKyS69rCA8qzpsHpfhKnPDYgxdg8zkknii8mZ+6YMQA==}
@@ -2116,9 +2143,9 @@ packages:
   kubernetes-types@1.30.0:
     resolution: {integrity: sha512-Dew1okvhM/SQcIa2rcgujNndZwU8VnSapDgdxlYoB84ZlpAD43U6KLAFqYo17ykSFGHNPrg0qry0bP+GJd9v7Q==}
 
-  kysely@0.27.6:
-    resolution: {integrity: sha512-FIyV/64EkKhJmjgC0g2hygpBv5RNWVPyNCqSAD7eTCv6eFWNIi4PN1UvdSJGicN/o35bnevgis4Y0UDC0qi8jQ==}
-    engines: {node: '>=14.0.0'}
+  kysely@0.28.3:
+    resolution: {integrity: sha512-svKnkSH72APRdjfVCCOknxaC9Eb3nA2StHG9d5/sKOqRvHRp2Dtf1XwDvc92b4B5v6LV+EAGWXQbZ5jMOvHaDw==}
+    engines: {node: '>=20.0.0'}
 
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -3084,6 +3111,12 @@ snapshots:
       '@dprint/typescript': 0.91.8
       prettier-linter-helpers: 1.0.0
 
+  '@effect/experimental@0.57.10(@effect/platform@0.93.6(effect@3.19.6))(effect@3.19.6)':
+    dependencies:
+      '@effect/platform': 0.93.6(effect@3.19.6)
+      effect: 3.19.6
+      uuid: 11.1.0
+
   '@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6)':
     dependencies:
       '@effect/platform': 0.93.4(effect@3.19.6)
@@ -3128,17 +3161,18 @@ snapshots:
       msgpackr: 1.11.5
       multipasta: 0.2.7
 
+  '@effect/platform@0.93.6(effect@3.19.6)':
+    dependencies:
+      effect: 3.19.6
+      find-my-way-ts: 0.1.6
+      msgpackr: 1.11.5
+      multipasta: 0.2.7
+
   '@effect/rpc@0.72.2(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6)':
     dependencies:
       '@effect/platform': 0.93.4(effect@3.19.6)
       effect: 3.19.6
       msgpackr: 1.11.5
-
-  '@effect/sql-kysely@0.44.0(@effect/sql@0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(effect@3.19.6)(kysely@0.27.6)':
-    dependencies:
-      '@effect/sql': 0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6)
-      effect: 3.19.6
-      kysely: 0.27.6
 
   '@effect/sql-pg@0.49.6(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(@effect/sql@0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(effect@3.19.6)':
     dependencies:
@@ -3697,6 +3731,12 @@ snapshots:
 
   '@types/normalize-package-data@2.4.4': {}
 
+  '@types/pg@8.15.6':
+    dependencies:
+      '@types/node': 22.19.1
+      pg-protocol: 1.10.3
+      pg-types: 2.2.0
+
   '@types/stack-utils@2.0.3': {}
 
   '@types/unist@2.0.11': {}
@@ -4163,6 +4203,17 @@ snapshots:
       gopd: 1.2.0
 
   eastasianwidth@0.2.0: {}
+
+  effect-sql-kysely@0.4.0(@effect/sql@0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(effect@3.19.6)(kysely@0.28.3):
+    dependencies:
+      '@effect/experimental': 0.57.10(@effect/platform@0.93.6(effect@3.19.6))(effect@3.19.6)
+      '@effect/platform': 0.93.6(effect@3.19.6)
+      '@effect/sql': 0.48.0(@effect/experimental@0.57.4(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6))(@effect/platform@0.93.4(effect@3.19.6))(effect@3.19.6)
+      effect: 3.19.6
+      kysely: 0.28.3
+    transitivePeerDependencies:
+      - ioredis
+      - lmdb
 
   effect@3.19.6:
     dependencies:
@@ -4942,7 +4993,7 @@ snapshots:
 
   kubernetes-types@1.30.0: {}
 
-  kysely@0.27.6: {}
+  kysely@0.28.3: {}
 
   levn@0.4.1:
     dependencies:

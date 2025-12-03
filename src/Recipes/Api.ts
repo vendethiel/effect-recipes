@@ -1,25 +1,23 @@
 import { HttpApiEndpoint, HttpApiGroup, OpenApi } from "@effect/platform";
 import { Schema } from "effect";
-import { Recipe, RecipeCreationError, RecipeId, RecipeNotFound } from "./Model";
+import { RecipeNotFound } from "./Error";
+import { RecipeId, Recipes } from "./Table";
 
 export class RecipesApi extends HttpApiGroup.make("recipes")
   .add(
-    HttpApiEndpoint.get("list", "/")
-      .addSuccess(Schema.Array(Recipe.json))
+    HttpApiEndpoint.get("list", "/").addSuccess(Schema.Array(Recipes.select)),
   )
   .add(
     HttpApiEndpoint.get("get", "/:id")
       .setPath(Schema.Struct({ id: RecipeId }))
-      .addSuccess(Recipe.json)
+      .addSuccess(Recipes.select)
       .addError(RecipeNotFound),
   )
   .add(
     HttpApiEndpoint.post("create", "/")
-      .setPayload(Recipe.jsonCreate)
-      .addSuccess(RecipeId)
-      .addError(RecipeCreationError)
+      .setPayload(Recipes.insert)
+      .addSuccess(RecipeId),
   )
   .prefix("/recipes")
   .annotate(OpenApi.Title, "Recipes")
-  .annotate(OpenApi.Description, "Recipes management API")
-{ }
+  .annotate(OpenApi.Description, "Recipes management API") {}
