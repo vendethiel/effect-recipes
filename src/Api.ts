@@ -3,5 +3,4 @@ import { RecipesApi } from "./Recipes/Api";
 
 export class Api extends HttpApi.make("api")
   .add(RecipesApi)
-  .annotate(OpenApi.Title, "Main API")
-{}
+  .annotate(OpenApi.Title, "Main API") {}

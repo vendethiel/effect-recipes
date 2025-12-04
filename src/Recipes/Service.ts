@@ -1,36 +1,34 @@
 import { Effect } from "effect";
-import { Db, PgDbLive } from "src/Db";
 import { RecipeNotFound } from "./Error";
-import { createRecipe, getRecipe, listRecipes } from "./Query";
 import type { RecipeId } from "./Table";
+import { RecipeRepository } from "./Repository";
 
 export class RecipeService extends Effect.Service<RecipeService>()(
   "RecipeService",
   {
-    dependencies: [PgDbLive],
+    dependencies: [RecipeRepository.Default],
     accessors: true,
     effect: Effect.gen(function* () {
-      const db = yield* Db;
+      const db = yield* RecipeRepository;
 
       return {
         list: Effect.fn("RecipeService.list")(function* () {
-          return yield* listRecipes();
-        }, Effect.provideService(Db, db)),
+          return yield* db.list();
+        }),
         get: Effect.fn("RecipeService.get")(function* (id: RecipeId) {
-          const row = yield* getRecipe(id);
+          const row = yield* db.get(id);
           return yield* row.pipe(
             Effect.catchTag("NoSuchElementException", () =>
               RecipeNotFound.make({ id }),
             ),
           );
-        }, Effect.provideService(Db, db)),
+        }),
         create: Effect.fn("RecipeService.create")(function* (spec: {
           title: string;
         }) {
-          const recipe = yield* createRecipe(spec);
+          const recipe = yield* db.create(spec);
           return recipe.id;
-        },
-        Effect.provideService(Db, db)),
+        }),
       };
     }),
   },
