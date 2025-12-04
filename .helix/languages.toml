@@ -1,0 +1,36 @@
+[[language]]
+name = "typescript"
+formatter = { command = "pnpm", args = [
+  "exec",
+  "prettier",
+  "--parser",
+  "typescript",
+] }
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  { name = "vscode-eslint-language-server" },
+]
+
+[[language]]
+name = "javascript"
+formatter = { command = "pnpm", args = [
+  "exec",
+  "prettier",
+] }
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  { name = "vscode-eslint-language-server" },
+]
+
+[[language]]
+name = "nix"
+formatter.command = "nixfmt"
+
+[language-server.vscode-eslint-language-server]
+command = "npx"
+args = [
+  "-y",
+  "--package=vscode-langservers-extracted@4.8.0",
+  "-c",
+  "vscode-eslint-language-server --stdio",
+]
