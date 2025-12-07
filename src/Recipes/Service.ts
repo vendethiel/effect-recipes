@@ -33,33 +33,3 @@ export class RecipeService extends Effect.Service<RecipeService>()(
     }),
   },
 ) {}
-
-/*
-
-const bigIntMax = (args: Array<bigint>) =>
-  args.reduce((m, e) => (e > m ? e : m));
-
-static readonly InMemory = Layer.effect(
-    this,
-    Effect.gen(function* () {
-      const ref = yield* Ref.make(HashMap.empty<RecipeId, Recipe>());
-
-      return RecipeService.make({
-        list: Effect.fn("RecipeService.list")(function* () {
-          return HashMap.toValues(yield* Ref.get(ref));
-        }),
-        get: Effect.fn("RecipeService.get")(function* (id: RecipeId) {
-          return yield* HashMap.get(yield* Ref.get(ref), id);
-        }),
-        create: Effect.fn("RecipeService.create")(function* (
-          spec: RecipeNew,
-        ) {
-          const highest = bigIntMax([...HashMap.keys(yield* Ref.get(ref))]);
-          const recipe: Recipe = { ...spec, id: RecipeId.make(highest + 1n) };
-          yield* Ref.update(ref, HashMap.set(recipe.id, recipe));
-          return recipe.id;
-        }),
-      });
-    }),
-  );
-  */

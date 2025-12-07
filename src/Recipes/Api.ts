@@ -1,7 +1,7 @@
 import { HttpApiEndpoint, HttpApiGroup, OpenApi } from "@effect/platform";
 import { Schema } from "effect";
 import { RecipeNotFound } from "./Error";
-import { RecipeId, Recipes } from "./Table";
+import { RecipeId, RecipeIdFromString, Recipes } from "./Table";
 
 export class RecipesApi extends HttpApiGroup.make("recipes")
   .add(
@@ -9,7 +9,7 @@ export class RecipesApi extends HttpApiGroup.make("recipes")
   )
   .add(
     HttpApiEndpoint.get("get", "/:id")
-      .setPath(Schema.Struct({ id: RecipeId }))
+      .setPath(Schema.Struct({ id: RecipeIdFromString }))
       .addSuccess(Recipes.select)
       .addError(RecipeNotFound),
   )
