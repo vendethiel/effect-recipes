@@ -12,5 +12,5 @@ export const Recipes = Table({
   title: Schema.String,
 });
 
-export type Recipe = { id: RecipeId; title: string };
-export type RecipeSpec = (typeof Recipes)["insert"]["Encoded"];
+export type Recipe = (typeof Recipes)["select"]["Type"];
+export type RecipeSpec = (typeof Recipes)["insert"]["Type"];
