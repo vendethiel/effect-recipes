@@ -3,9 +3,11 @@ import * as Database from "effect-sql-kysely/Pg";
 import * as kysely from "kysely";
 import { Pool } from "pg";
 import { Recipes } from "./Recipes/Table";
+import { Users } from "./Users/Table";
 
 export const DbSchema = Schema.Struct({
   recipes: Recipes,
+  users: Users,
 });
 
 export type DbSchema = typeof DbSchema.Encoded;
