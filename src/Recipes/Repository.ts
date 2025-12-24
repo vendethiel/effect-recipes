@@ -1,12 +1,12 @@
 import { Effect, HashMap, Layer, Ref, Schema } from "effect";
 import { makeSchema } from "effect-sql-kysely";
-import { Db, PgDbLive } from "src/Db";
+import { Db } from "src/Db";
 import { type Recipe, type RecipeSpec, RecipeId, Recipes } from "./Table";
 
 export class RecipeRepository extends Effect.Service<RecipeRepository>()(
   "RecipeRepository",
   {
-    dependencies: [PgDbLive],
+    dependencies: [],
     effect: Effect.gen(function* () {
       const { kysely } = yield* Db;
       const { findAll, findOne, single } = makeSchema(kysely);
