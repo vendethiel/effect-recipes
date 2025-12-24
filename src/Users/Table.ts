@@ -8,3 +8,4 @@ export const Users = Table({
   id: Generated(UserId),
   email: Schema.String,
 });
+

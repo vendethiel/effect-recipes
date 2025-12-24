@@ -35,6 +35,13 @@ export class RecipeRepository extends Effect.Service<RecipeRepository>()(
               db.insertInto("recipes").values(spec).returningAll(),
           }),
         ),
+        byAuthor: Effect.fn("RecipeRepository.byAuthor")(
+          findAll({
+            Request: Schema.Void,
+            Result: Recipes.select,
+            execute: (db) => db.selectFrom("recipes").selectAll(),
+          }),
+        ),
       };
     }),
   },

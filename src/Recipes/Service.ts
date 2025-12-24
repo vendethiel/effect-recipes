@@ -1,7 +1,8 @@
 import { Effect } from "effect";
 import { RecipeNotFound } from "./Error";
-import type { RecipeId } from "./Table";
+import type { RecipeId, RecipeCreate } from "./Table";
 import { RecipeRepository } from "./Repository";
+import { UserId } from "src/Users/Table";
 
 export class RecipeService extends Effect.Service<RecipeService>()(
   "RecipeService",
@@ -23,9 +24,9 @@ export class RecipeService extends Effect.Service<RecipeService>()(
             ),
           );
         }),
-        create: Effect.fn("RecipeService.create")(function* (spec: {
-          title: string;
-        }) {
+        create: Effect.fn("RecipeService.create")(function* (
+          spec: RecipeSpec,
+        ) {
           const recipe = yield* db.create(spec);
           return recipe.id;
         }),
