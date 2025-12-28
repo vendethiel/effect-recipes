@@ -20,6 +20,14 @@ export class UserRepository extends Effect.Service<UserRepository>()(
               db.selectFrom("users").where("id", "=", id).selectAll(),
           }),
         ),
+        getByToken: Effect.fn("UserRepository.getByToken")(
+          findOne({
+            Request: Users.select.fields.token,
+            Result: Users.select,
+            execute: (db, token) =>
+            db.selectFrom("users").where("token", "=", token).selectAll()
+          })
+        )
       };
     }),
   },
