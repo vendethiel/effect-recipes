@@ -23,8 +23,9 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/setup
       - run: pnpm codegen
-      - name: Check source state
-        run: git add src && git diff-index --cached HEAD --exit-code src
+#      Default template builds index.ts to be a bunch of reexports, but we use `esrun`
+#      - name: Check source state
+#        run: git add src && git diff-index --cached HEAD --exit-code src
 
   types:
     name: Types
