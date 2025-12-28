@@ -2,11 +2,12 @@ import { Effect } from "effect";
 import { RecipeNotFound } from "./Error";
 import type { RecipeId, RecipeSpec } from "./Table";
 import { RecipeRepository } from "./Repository";
+import { UserId } from "src/Users/Table";
 
 export class RecipeService extends Effect.Service<RecipeService>()(
   "RecipeService",
   {
-    dependencies: [RecipeRepository.Default],
+    dependencies: [],
     accessors: true,
     effect: Effect.gen(function* () {
       const db = yield* RecipeRepository;
@@ -23,11 +24,14 @@ export class RecipeService extends Effect.Service<RecipeService>()(
             ),
           );
         }),
-        create: Effect.fn("RecipeService.create")(function* (
-          spec: RecipeSpec,
-        ) {
+        create: Effect.fn("RecipeService.create")(function* (spec: RecipeSpec) {
           const recipe = yield* db.create(spec);
           return recipe.id;
+        }),
+        byAuthor: Effect.fn("RecipeService.byAuthor")(function* (
+          author: UserId,
+        ) {
+          return yield* db.byAuthor(author);
         }),
       };
     }),
