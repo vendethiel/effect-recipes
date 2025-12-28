@@ -16,6 +16,6 @@ export const Recipes = Table({
 });
 
 // XXX use Kysely helpers
-export type Recipe = (typeof Recipes)["select"]["Type"];
-export type RecipeCreate = (typeof Recipes)["insert"]["Type"];
-export type RecipeSpec = Exclude<RecipeCreate, 'author'>;
+export type Recipe = typeof Recipes.select.Type;
+export type RecipeCreate = typeof Recipes.insert.Type;
+export type RecipeSpec = Exclude<RecipeCreate, "author">;
