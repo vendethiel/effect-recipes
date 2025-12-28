@@ -1,7 +1,8 @@
-import { Effect, HashMap, Layer, Ref, Schema } from "effect";
+import { Effect, HashMap, Iterable, Layer, pipe, Ref, Schema } from "effect";
 import { makeSchema } from "effect-sql-kysely";
 import { Db } from "src/Db";
 import { type Recipe, type RecipeSpec, RecipeId, Recipes } from "./Table";
+import { UserId } from "src/Users/Table";
 
 export class RecipeRepository extends Effect.Service<RecipeRepository>()(
   "RecipeRepository",
@@ -37,7 +38,7 @@ export class RecipeRepository extends Effect.Service<RecipeRepository>()(
         ),
         byAuthor: Effect.fn("RecipeRepository.byAuthor")(
           findAll({
-            Request: Schema.Void,
+            Request: Recipes.select.fields.author,
             Result: Recipes.select,
             execute: (db) => db.selectFrom("recipes").selectAll(),
           }),
@@ -68,6 +69,15 @@ export class RecipeRepository extends Effect.Service<RecipeRepository>()(
           };
           yield* Ref.update(ref, HashMap.set(recipe.id, recipe));
           return recipe;
+        }),
+        byAuthor: Effect.fn("RecipeRepository.byAuthor")(function* (
+          authorId: UserId,
+        ) {
+          return pipe(
+            HashMap.values(yield* Ref.get(ref)),
+            Iterable.filter((spec) => spec.author === authorId),
+            (xs) => Array.from(xs),
+          );
         }),
       });
     }),

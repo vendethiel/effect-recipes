@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { RecipeNotFound } from "./Error";
-import type { RecipeId, RecipeCreate } from "./Table";
+import type { RecipeId, RecipeSpec } from "./Table";
 import { RecipeRepository } from "./Repository";
-import { UserId } from "src/Users/Table";
 
 export class RecipeService extends Effect.Service<RecipeService>()(
   "RecipeService",
