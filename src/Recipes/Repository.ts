@@ -74,7 +74,8 @@ export class RecipeRepository extends Effect.Service<RecipeRepository>()(
           authorId: UserId,
         ) {
           return pipe(
-            HashMap.values(yield* Ref.get(ref)),
+            yield* Ref.get(ref),
+            HashMap.values,
             Iterable.filter((spec) => spec.author === authorId),
             (xs) => Array.from(xs),
           );
