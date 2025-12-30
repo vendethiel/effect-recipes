@@ -2,7 +2,7 @@ import { Effect, HashMap, Iterable, Layer, pipe, Ref, Schema } from "effect";
 import { makeSchema } from "effect-sql-kysely";
 import { Db } from "src/Db";
 import { type Recipe, type RecipeSpec, RecipeId, Recipes } from "./Table";
-import { UserId } from "src/Users/Table";
+import type { UserId } from "src/Users/Table";
 
 export class RecipeRepository extends Effect.Service<RecipeRepository>()(
   "RecipeRepository",

@@ -9,6 +9,7 @@ import codegen from "eslint-plugin-codegen";
 import _import from "eslint-plugin-import";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import sortDestructureKeys from "eslint-plugin-sort-destructure-keys";
+import functional from "eslint-plugin-functional";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -30,6 +31,9 @@ export default [
     "plugin:@typescript-eslint/recommended",
   ),
   ...effectEslint.configs.dprint,
+  functional.configs.externalTypeScriptRecommended,
+  functional.configs.recommended,
+  functional.configs.stylistic,
   {
     plugins: {
       import: fixupPluginRules(_import),
@@ -43,6 +47,9 @@ export default [
       parser: tsParser,
       ecmaVersion: 2018,
       sourceType: "module",
+      parserOptions: {
+        projectService: true,
+      },
     },
 
     settings: {
@@ -59,7 +66,7 @@ export default [
 
     rules: {
       "codegen/codegen": "error",
-      "no-fallthrough": "off",
+      "no-fallthrough": "error",
       "no-irregular-whitespace": "off",
       "object-shorthand": "error",
       "prefer-destructuring": "off",
@@ -94,10 +101,10 @@ export default [
       ],
 
       "@typescript-eslint/member-delimiter-style": 0,
-      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-non-null-assertion": "error",
       "@typescript-eslint/ban-types": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-empty-interface": "off",
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-empty-interface": "error",
       "@typescript-eslint/consistent-type-imports": "warn",
 
       "@typescript-eslint/no-unused-vars": [
@@ -113,12 +120,12 @@ export default [
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/interface-name-prefix": "off",
-      "@typescript-eslint/no-array-constructor": "off",
-      "@typescript-eslint/no-use-before-define": "off",
-      "@typescript-eslint/no-namespace": "off",
+      "@typescript-eslint/no-array-constructor": "error",
+      "@typescript-eslint/no-use-before-define": "error",
+      "@typescript-eslint/no-namespace": "error",
 
       "@effect/dprint": [
-        "off", // conflicts heavily with prettier and looks way works
+        "off", // conflicts heavily with prettier and looks way worse
         {
           config: {
             indentWidth: 2,
@@ -131,6 +138,10 @@ export default [
           },
         },
       ],
+
+      // Make `functional` play nicely with Effect
+      "functional/no-classes": "off",
+      "functional/no-class-inheritance": "off",
     },
   },
   eslintConfigPrettier,

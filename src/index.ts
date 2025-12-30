@@ -6,6 +6,7 @@ import { AuthorizationLive } from "./Platform/CurrentUser";
 import { RecipeRepository } from "./Recipes/Repository";
 import { UserRepository } from "./Users/Repository";
 
+/* eslint-disable-next-line functional/no-expression-statements */
 HttpLive.pipe(
   Layer.provide(AuthorizationLive),
   Layer.provide(RecipeRepository.Default),

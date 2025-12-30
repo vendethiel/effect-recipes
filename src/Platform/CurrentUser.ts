@@ -6,7 +6,7 @@ import {
 } from "@effect/platform";
 import { Context, Effect, Layer, Redacted, Schema } from "effect";
 import { UserRepository } from "src/Users/Repository";
-import { User } from "src/Users/Table";
+import type { User } from "src/Users/Table";
 
 export class Unauthorized extends Schema.TaggedError<Unauthorized>()(
   "Unauthorized",
