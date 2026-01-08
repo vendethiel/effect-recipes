@@ -9,9 +9,12 @@ import { Config, Layer } from "effect";
 import { createServer } from "http";
 import { Api } from "./Api";
 import { HttpRecipesLive } from "./Recipes/Http";
+import { HttpUsersLive } from "./Users/Http";
 
-
-const ApiLive = Layer.provide(HttpApiBuilder.api(Api), [HttpRecipesLive]);
+const ApiLive = Layer.provide(HttpApiBuilder.api(Api), [
+  HttpRecipesLive,
+  HttpUsersLive,
+]);
 
 export const HttpLive = HttpApiBuilder.serve(HttpMiddleware.logger).pipe(
   Layer.provide(HttpApiSwagger.layer()),

@@ -12,6 +12,7 @@ export const HttpRecipesLive = HttpApiBuilder.group(
       handlers
         .handle("list", () =>
           RecipeService.list().pipe(
+            // XXX Would it be better as ensureErrorType()+orDie?
             Effect.catchTag("SqlError", "ParseError", Effect.die),
           ),
         )
