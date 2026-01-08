@@ -2,7 +2,7 @@ import { HttpApiBuilder } from "@effect/platform";
 import { Effect, Layer } from "effect";
 import { Api } from "src/Api";
 import { RecipeService } from "./Service";
-import { CurrentUser } from "src/Platform/CurrentUser";
+import { CurrentUser } from "src/Auth/CurrentUser";
 
 export const HttpRecipesLive = HttpApiBuilder.group(
   Api,

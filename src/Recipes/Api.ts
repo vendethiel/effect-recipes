@@ -9,7 +9,7 @@ import { RecipeNotFound } from "./Error";
 import { RecipeId, RecipeIdFromString, Recipes } from "./Table";
 import { UserIdFromString } from "src/Users/Table";
 import { Unauthorized } from "@effect/platform/HttpApiError";
-import { Authorization } from "src/Platform/CurrentUser";
+import { Authorization } from "src/Auth/CurrentUser";
 
 export class RecipesApi extends HttpApiGroup.make("recipes")
   .add(HttpApiEndpoint.get("list")`/`.addSuccess(Schema.Array(Recipes.select)))

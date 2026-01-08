@@ -1,7 +1,7 @@
 import { HttpApiEndpoint, HttpApiGroup, OpenApi } from "@effect/platform";
 import { Unauthorized } from "@effect/platform/HttpApiError";
 import { Users } from "./Table";
-import { Authorization } from "src/Platform/CurrentUser";
+import { Authorization } from "src/Auth/CurrentUser";
 
 export class UsersApi extends HttpApiGroup.make("users")
   .add(

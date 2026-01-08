@@ -2,7 +2,7 @@ import { NodeRuntime } from "@effect/platform-node";
 import { Layer } from "effect";
 import { HttpLive } from "./Http";
 import { PgDbLive } from "./Db";
-import { AuthorizationLive } from "./Platform/CurrentUser";
+import { AuthorizationLive } from "./Auth/CurrentUser";
 import { RecipeRepository } from "./Recipes/Repository";
 import { UserRepository } from "./Users/Repository";
 
