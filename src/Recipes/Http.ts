@@ -22,7 +22,10 @@ export const HttpRecipesLive = HttpApiBuilder.group(
           ),
         )
         .handle("create", ({ payload }) =>
-          RecipeService.create(payload).pipe(
+          Effect.gen(function*() {
+            const currentUser = yield* CurrentUser;
+            return yield* RecipeService.create({...payload, author: currentUser.id});
+          }).pipe(
             Effect.catchTag(
               "SqlError",
               "ParseError",

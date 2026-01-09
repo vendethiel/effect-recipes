@@ -1,7 +1,7 @@
 import { Effect, HashMap, Iterable, Layer, pipe, Ref, Schema } from "effect";
 import { makeSchema } from "effect-sql-kysely";
 import { Db } from "src/Db";
-import { type Recipe, type RecipeSpec, RecipeId, Recipes } from "./Table";
+import { type Recipe, type RecipeCreate, RecipeId, Recipes } from "./Table";
 import type { UserId } from "src/Users/Table";
 
 export class RecipeRepository extends Effect.Service<RecipeRepository>()(
@@ -60,7 +60,7 @@ export class RecipeRepository extends Effect.Service<RecipeRepository>()(
           return HashMap.get(yield* Ref.get(ref), id);
         }),
         create: Effect.fn("RecipeRepository.create")(function* (
-          spec: RecipeSpec,
+          spec: RecipeCreate,
         ) {
           const highest = Math.max(...HashMap.keys(yield* Ref.get(ref)));
           const recipe: Recipe = {
@@ -84,3 +84,4 @@ export class RecipeRepository extends Effect.Service<RecipeRepository>()(
     }),
   );
 }
+

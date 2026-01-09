@@ -25,9 +25,9 @@ export class UserRepository extends Effect.Service<UserRepository>()(
             Request: Users.select.fields.token,
             Result: Users.select,
             execute: (db, token) =>
-            db.selectFrom("users").where("token", "=", token).selectAll()
-          })
-        )
+              db.selectFrom("users").where("token", "=", token).selectAll(),
+          }),
+        ),
       };
     }),
   },

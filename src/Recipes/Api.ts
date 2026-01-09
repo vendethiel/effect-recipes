@@ -11,6 +11,8 @@ import { UserIdFromString } from "src/Users/Table";
 import { Unauthorized } from "@effect/platform/HttpApiError";
 import { Authorization } from "src/Auth/CurrentUser";
 
+const RecipeSpec = Recipes.select.omit("author");
+
 export class RecipesApi extends HttpApiGroup.make("recipes")
   .add(HttpApiEndpoint.get("list")`/`.addSuccess(Schema.Array(Recipes.select)))
   .add(
@@ -22,14 +24,14 @@ export class RecipesApi extends HttpApiGroup.make("recipes")
   )
   .add(
     HttpApiEndpoint.post("create")`/`
-      .setPayload(Recipes.insert)
-      .addSuccess(RecipeId),
+      .setPayload(RecipeSpec)
+      .addSuccess(RecipeId)
+      .middleware(Authorization),
   )
   .add(
     HttpApiEndpoint.get(
       "byAuthor",
     )`/author/${HttpApiSchema.param("author", UserIdFromString)}`
-      .setPath(Schema.Struct({ author: UserIdFromString }))
       .addSuccess(Schema.Array(Recipes.select)),
   )
   .add(

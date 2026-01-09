@@ -37,5 +37,9 @@ export const PgDbLive = Db.layer({
         pool: new Pool(config),
       }),
     });
-  }),
+  }).pipe(Effect.acquireRelease((db) => Effect.promise(() => db.destroy()))),
+  spanAttributes: [
+    ["db.system", "pg"],
+    ["db.app", "recipes"],
+  ],
 });

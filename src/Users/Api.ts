@@ -10,6 +10,7 @@ export class UsersApi extends HttpApiGroup.make("users")
       .addSuccess(Users.select)
       .middleware(Authorization),
   )
+  // TODO create
   .prefix("/users")
   .annotate(OpenApi.Title, "Users")
   .annotate(OpenApi.Description, "Users management API") {}
