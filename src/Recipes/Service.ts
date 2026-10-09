@@ -8,7 +8,6 @@ export class RecipeService extends Effect.Service<RecipeService>()(
   "RecipeService",
   {
     dependencies: [],
-    accessors: true,
     effect: Effect.gen(function* () {
       const db = yield* RecipeRepository;
 

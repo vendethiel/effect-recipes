@@ -11,20 +11,21 @@ export const HttpRecipesLive = HttpApiBuilder.group(
     Effect.succeed(
       handlers
         .handle("list", () =>
-          RecipeService.list().pipe(
+          RecipeService.use((s) => s.list()) .pipe(
             // XXX Would it be better as ensureErrorType()+orDie?
             Effect.catchTag("SqlError", "ParseError", Effect.die),
           ),
         )
         .handle("get", ({ path: { id } }) =>
-          RecipeService.get(id).pipe(
+          RecipeService.use((s) => s.get(id)).pipe(
             Effect.catchTag("SqlError", "ParseError", Effect.die),
           ),
         )
         .handle("create", ({ payload }) =>
           Effect.gen(function*() {
             const currentUser = yield* CurrentUser;
-            return yield* RecipeService.create({...payload, author: currentUser.id});
+            const rs = yield* RecipeService;
+            return yield* rs.create({...payload, author: currentUser.id});
           }).pipe(
             Effect.catchTag(
               "SqlError",
@@ -35,14 +36,15 @@ export const HttpRecipesLive = HttpApiBuilder.group(
           ),
         )
         .handle("byAuthor", ({ path: { author } }) =>
-          RecipeService.byAuthor(author).pipe(
+          RecipeService.use((s) => s.byAuthor(author)).pipe(
             Effect.catchTag("SqlError", "ParseError", Effect.die),
           ),
         )
         .handle("mine", () =>
           Effect.gen(function* () {
             const currentUser = yield* CurrentUser;
-            return yield* RecipeService.byAuthor(currentUser.id);
+            const rs = yield* RecipeService;
+            return yield* rs.byAuthor(currentUser.id);
           }).pipe(Effect.catchTag("SqlError", "ParseError", Effect.die)),
         ),
     ),

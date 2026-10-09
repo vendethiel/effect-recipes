@@ -1,4 +1,4 @@
-import { Config, Effect, Schema } from "effect";
+import { Config, Effect, Redacted, Schema } from "effect";
 import * as Database from "effect-sql-kysely/Pg";
 import * as kysely from "kysely";
 import { Pool } from "pg";
@@ -27,10 +27,9 @@ export const PgDbLive = Db.layer({
       username: yield* Config.string("DB_USERNAME").pipe(
         Config.withDefault("postgres"),
       ),
-      // XXX redacted?
-      password: yield* Config.string("DB_PASSWORD").pipe(
-        Config.withDefault("postgres"),
-      ),
+      password: Redacted.value(yield* Config.redacted("DB_PASSWORD").pipe(
+        Config.withDefault(Redacted.make("")),
+      )),
     };
     return new kysely.Kysely<DbSchema>({
       dialect: new kysely.PostgresDialect({

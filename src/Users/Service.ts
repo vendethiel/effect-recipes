@@ -5,7 +5,6 @@ import { UserNotFound } from "./Error";
 
 export class UserService extends Effect.Service<UserService>()("UserService", {
   dependencies: [],
-  accessors: true,
   effect: Effect.gen(function* () {
     const db = yield* UserRepository;
 
