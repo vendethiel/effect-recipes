@@ -23,7 +23,9 @@ export class RecipeService extends Effect.Service<RecipeService>()(
             ),
           );
         }),
-        create: Effect.fn("RecipeService.create")(function* (spec: RecipeCreate) {
+        create: Effect.fn("RecipeService.create")(function* (
+          spec: RecipeCreate,
+        ) {
           const recipe = yield* db.create(spec);
           return recipe.id;
         }),

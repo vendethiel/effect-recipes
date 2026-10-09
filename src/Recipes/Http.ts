@@ -11,7 +11,7 @@ export const HttpRecipesLive = HttpApiBuilder.group(
     Effect.succeed(
       handlers
         .handle("list", () =>
-          RecipeService.use((s) => s.list()) .pipe(
+          RecipeService.use((s) => s.list()).pipe(
             // XXX Would it be better as ensureErrorType()+orDie?
             Effect.catchTag("SqlError", "ParseError", Effect.die),
           ),
@@ -22,10 +22,10 @@ export const HttpRecipesLive = HttpApiBuilder.group(
           ),
         )
         .handle("create", ({ payload }) =>
-          Effect.gen(function*() {
+          Effect.gen(function* () {
             const currentUser = yield* CurrentUser;
             const rs = yield* RecipeService;
-            return yield* rs.create({...payload, author: currentUser.id});
+            return yield* rs.create({ ...payload, author: currentUser.id });
           }).pipe(
             Effect.catchTag(
               "SqlError",

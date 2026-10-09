@@ -31,8 +31,9 @@ export class RecipesApi extends HttpApiGroup.make("recipes")
   .add(
     HttpApiEndpoint.get(
       "byAuthor",
-    )`/author/${HttpApiSchema.param("author", UserIdFromString)}`
-      .addSuccess(Schema.Array(Recipes.select)),
+    )`/author/${HttpApiSchema.param("author", UserIdFromString)}`.addSuccess(
+      Schema.Array(Recipes.select),
+    ),
   )
   .add(
     HttpApiEndpoint.get("mine")`/mine`

@@ -27,9 +27,11 @@ export const PgDbLive = Db.layer({
       username: yield* Config.string("DB_USERNAME").pipe(
         Config.withDefault("postgres"),
       ),
-      password: Redacted.value(yield* Config.redacted("DB_PASSWORD").pipe(
-        Config.withDefault(Redacted.make("")),
-      )),
+      password: Redacted.value(
+        yield* Config.redacted("DB_PASSWORD").pipe(
+          Config.withDefault(Redacted.make("")),
+        ),
+      ),
     };
     return new kysely.Kysely<DbSchema>({
       dialect: new kysely.PostgresDialect({
