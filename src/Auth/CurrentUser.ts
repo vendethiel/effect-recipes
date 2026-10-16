@@ -5,8 +5,9 @@ import {
   OpenApi,
 } from "@effect/platform";
 import { Context, Effect, Layer, Redacted, Schema } from "effect";
+import { Permission, permissionsForUser } from "src/Permissions";
 import { UserRepository } from "src/Users/Repository";
-import type { User } from "src/Users/Table";
+import { type User } from "src/Users/Table";
 
 export class Unauthorized extends Schema.TaggedError<Unauthorized>()(
   "Unauthorized",
@@ -16,7 +17,7 @@ export class Unauthorized extends Schema.TaggedError<Unauthorized>()(
 
 export class CurrentUser extends Context.Tag("CurrentUser")<
   CurrentUser,
-  User
+  User & { permissions: Set<Permission> }
 >() {}
 
 export class Authorization extends HttpApiMiddleware.Tag<Authorization>()(
@@ -47,7 +48,8 @@ export const AuthorizationLive = Layer.effect(
         Effect.gen(function* () {
           const user = yield* userRepo.getByToken(Redacted.value(bearerToken));
           return yield* user.pipe(
-            Effect.catchTag("NoSuchElementException", () => new Unauthorized()),
+            Effect.catchTag("NoSuchElementException", () => Unauthorized.make()),
+            Effect.map((user) => ({...user, permissions: permissionsForUser(user)}))
           );
         }).pipe(Effect.catchTag("SqlError", "ParseError", Effect.die)),
     };

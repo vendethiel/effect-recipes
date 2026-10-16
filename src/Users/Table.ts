@@ -13,5 +13,6 @@ export const Users = Table({
   token: Schema.String,
 });
 
-export type User = typeof Users.select.Type;
+export const User = Users.select;
+export type User = typeof User.Type;
 export const SafeUser = Users.select.pipe(Schema.omit("token"));
