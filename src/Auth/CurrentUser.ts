@@ -5,7 +5,7 @@ import {
   OpenApi,
 } from "@effect/platform";
 import { Context, Effect, Layer, Redacted, Schema } from "effect";
-import { Permission, permissionsForUser } from "src/Permissions";
+import { UserPermission, permissionsForUser } from "src/Permissions";
 import { UserRepository } from "src/Users/Repository";
 import { type User } from "src/Users/Table";
 
@@ -17,7 +17,7 @@ export class Unauthorized extends Schema.TaggedError<Unauthorized>()(
 
 export class CurrentUser extends Context.Tag("CurrentUser")<
   CurrentUser,
-  User & { permissions: Set<Permission> }
+  User & { permissions: Set<UserPermission> }
 >() {}
 
 export class Authorization extends HttpApiMiddleware.Tag<Authorization>()(
